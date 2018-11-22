@@ -1,0 +1,25 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  application:
+    name: auth-gateway
+
+zuul:
+  routes:
+    auth-center:
+      path: /auth/**
+      sensitiveHeaders: Cookie,Set-Cookie
+    fui-service:
+      path: /fui/**
+      sensitiveHeaders:
+  add-proxy-headers: true
+
+fui.security.jwt.secret: XOVs4Z1YtPKqKwQVywG9j

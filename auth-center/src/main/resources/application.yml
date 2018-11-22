@@ -1,0 +1,48 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8761}/eureka/
+
+server:
+  port: 8081
+
+fui.security.jwt.secret: XOVs4Z1YtPKqKwQVywG9j
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  application:
+    name: auth-center
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/jwt?useSSL=false&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: admin
+      driver-class-name: com.mysql.jdbc.Driver
+      initialSize: 1
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      useGlobalDataSourceStat: true
+  thymeleaf:
+    cache: false
+mybatis:
+  init:
+    databaseType: mysql
+    databaseSchemaUpdate: false
+  type-aliases-package: com.fui.cloud.model
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  config: classpath:conf/log4j2.xml
