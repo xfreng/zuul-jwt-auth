@@ -8,8 +8,7 @@
 
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
-            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} %file:%line - %msg%n"/>
         </Console>
         <RollingRandomAccessFile name="infoFile" fileName="${filePath}/${fileName}-info.log" immediateFlush="false"
                                  filePattern="${fileGz}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.${fileName}-info.gz">
