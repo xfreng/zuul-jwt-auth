@@ -1,54 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="OFF">
+<Configuration status="WARN">
     <Properties>
-        <Property name="fileName">auth-center</Property>
-        <Property name="filePath">D:/installed/apache-tomcat-7.0.72/logs</Property>
-        <Property name="fileGz">D:/installed/apache-tomcat-7.0.72/logs/gz</Property>
+        <Property name="LOG_HOME">D:/installed/apache-tomcat-7.0.72/logs/auth-center</Property>
     </Properties>
 
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
+        <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} %file:%line - %msg%n"/>
         </Console>
-        <RollingRandomAccessFile name="infoFile" fileName="${filePath}/${fileName}-info.log" immediateFlush="false"
-                                 filePattern="${fileGz}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.${fileName}-info.gz">
-            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} [%t] %-5level %logger{36} %L %M - %msg%xEx%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-            <Filters>
-                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-            <DefaultRolloverStrategy max="24"/>
-        </RollingRandomAccessFile>
-        <RollingRandomAccessFile name="errorFile" fileName="${filePath}/${fileName}-error.log" immediateFlush="false"
-                                 filePattern="${fileGz}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.${fileName}-error.gz">
-            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} [%t] %-5level %logger{36} %L %M - %msg%xEx%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-            <Filters>
-                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-            <DefaultRolloverStrategy max="50"/>
-        </RollingRandomAccessFile>
 
+        <RollingFile name="RollingFileInfo" fileName="${LOG_HOME}/main.log"
+                     filePattern="${LOG_HOME}/main-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="utf-8"
+                           pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} %file:%line - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1000 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="errorLogFileInfo" fileName="${LOG_HOME}/error.log"
+                     filePattern="${LOG_HOME}/main-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="utf-8"
+                           pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} %file:%line - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
-        <logger name="com.fui.cloud" level="debug" additivity="false">
-            <appender-ref ref="console"/>
-            <appender-ref ref="infoFile"/>
-            <appender-ref ref="errorFile"/>
+
+        <logger name="com.fectis" level="debug" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="errorLogFileInfo"/>
         </logger>
 
-        <AsyncRoot level="info" additivity="false">
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="infoFile"/>
-            <AppenderRef ref="errorFile"/>
-        </AsyncRoot>
+        <root level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="errorLogFileInfo"/>
+        </root>
     </Loggers>
+
 </Configuration>
