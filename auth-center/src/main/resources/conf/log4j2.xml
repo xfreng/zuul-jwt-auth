@@ -34,7 +34,7 @@
 
     <Loggers>
 
-        <logger name="com.fectis" level="debug" additivity="false">
+        <logger name="com.fui.cloud" level="debug" additivity="false">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="errorLogFileInfo"/>
