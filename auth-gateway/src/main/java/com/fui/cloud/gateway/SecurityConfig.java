@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // 由于使用的是JWT，我们这里不需要csrf
-        BasicHttpSecurityConfig.basicHttpSecurity(httpSecurity, config, "jwt");
+        BasicHttpSecurityConfig.basicHttpSecurity(httpSecurity, config, authenticationManager(), "jwt");
     }
 }
 

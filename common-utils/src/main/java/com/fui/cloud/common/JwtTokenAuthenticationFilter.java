@@ -38,8 +38,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.isBlank(token)) {
             token = request.getParameter(config.getHeader());
         }
-        if (token != null && token.startsWith(config.getPrefix() + " ")) {
-            token = token.replace(config.getPrefix() + " ", "");
+        if (StringUtils.isNotBlank(token) && token.startsWith(config.getPrefix() + "-")) {
+            token = token.replace(config.getPrefix() + "-", "");
             try {
                 Claims claims = Jwts.parser()
                         .setSigningKey(config.getSecret().getBytes())
@@ -66,6 +66,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED); //响应体
                 SecurityContextHolder.clearContext();
             }
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED); //响应体
+            SecurityContextHolder.clearContext();
         }
         filterChain.doFilter(request, response);
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="LOG_HOME">D:/installed/apache-tomcat-7.0.72/logs/auth-center</Property>
+        <Property name="LOG_HOME">f:/data/logs/auth-center</Property>
     </Properties>
 
     <Appenders>
@@ -33,7 +33,6 @@
     </Appenders>
 
     <Loggers>
-
         <logger name="com.fui.cloud" level="debug" additivity="false">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
@@ -46,5 +45,4 @@
             <appender-ref ref="errorLogFileInfo"/>
         </root>
     </Loggers>
-
 </Configuration>

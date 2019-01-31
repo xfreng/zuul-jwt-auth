@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        BasicHttpSecurityConfig.basicHttpSecurity(httpSecurity, config, "auth");
+        BasicHttpSecurityConfig.basicHttpSecurity(httpSecurity, config, authenticationManager(), "auth");
     }
 }
 

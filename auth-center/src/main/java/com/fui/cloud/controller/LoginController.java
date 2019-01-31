@@ -15,18 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Api(description = "用户登录controller")
 public class LoginController {
 
-    @ApiOperation(value = "转发到登录页面")
-    @GetMapping("/login")
-    public ModelAndView login() {
-        return new ModelAndView("html/login");
-    }
-
-    @ApiOperation(value = "转发到首页")
-    @GetMapping("/index")
-    public ModelAndView index() {
-        return new ModelAndView("html/index/index");
-    }
-
     @ApiOperation(value = "获取登录人的授权信息")
     @GetMapping("/get")
     @Secured("ROLE_ADMIN")
@@ -39,7 +27,7 @@ public class LoginController {
     @ApiImplicitParam(name = "accessToken", value = "用来认证的access_token", required = true, dataType = "String")
     @GetMapping("/logout")
     public ModelAndView logout() {
-        return new ModelAndView("html/login");
+        return new ModelAndView("login/login");
     }
 
 }
