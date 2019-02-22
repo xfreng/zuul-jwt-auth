@@ -66,9 +66,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED); //响应体
                 SecurityContextHolder.clearContext();
             }
-        } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED); //响应体
-            SecurityContextHolder.clearContext();
         }
         filterChain.doFilter(request, response);
     }
@@ -79,7 +76,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 "/v2/api-docs",
                 "/configuration/ui",
                 "/configuration/security",
-                config.getZuulPrefixUrl() + config.getLoginUrl(),
                 config.getZuulPrefixUrl() + config.getIndexUrl(),
                 config.getZuulPrefixUrl() + config.getGuestUrl()
         };

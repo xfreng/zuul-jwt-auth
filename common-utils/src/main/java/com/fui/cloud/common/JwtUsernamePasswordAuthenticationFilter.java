@@ -1,5 +1,6 @@
 package com.fui.cloud.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -56,6 +57,16 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
                 .signWith(SignatureAlgorithm.HS256, config.getSecret().getBytes())
                 .compact();
         response.addHeader(config.getHeader(), config.getPrefix() + "-" + token);
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            json.put("expiration", config.getExpiration());
+            json.put(config.getHeader(), config.getPrefix() + "-" + token);
+            response.getWriter().write(json.toJSONString());
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 
     @Getter

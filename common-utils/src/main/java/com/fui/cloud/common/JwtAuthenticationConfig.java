@@ -14,9 +14,6 @@ public class JwtAuthenticationConfig {
     @Value("${fui.security.jwt.url:/getToken}")
     private String url;
 
-    @Value("${fui.login.url:/login}")
-    private String loginUrl;
-
     @Value("${fui.index.url:/index}")
     private String indexUrl;
 
@@ -30,7 +27,7 @@ public class JwtAuthenticationConfig {
     private String prefix;
 
     @Value("${fui.security.jwt.expiration:#{24*60*60}}")
-    private int expiration; // default 24 hours
+    private long expiration; // default 24 hours
 
     @Value("${fui.security.jwt.secret}")
     private String secret;
